@@ -905,3 +905,164 @@ input {
     white-space: normal;
   }
 }
+/* =========================
+   NOVA ESTRUTURA DE PÁGINAS
+========================= */
+
+.page-back {
+  margin-bottom: 25px;
+}
+
+.page-back a {
+  color: var(--navy);
+  font-weight: 800;
+}
+
+.page-back a:hover {
+  color: var(--cyan);
+}
+
+
+/* QUEM SOMOS */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.about-text {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.about-text p {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+
+/* BOTÃO CENTRAL */
+
+.center-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}
+
+
+/* BOTÃO CLARO */
+
+.btn-light {
+  background: white;
+  color: var(--navy);
+  border: none;
+}
+
+
+/* RESUMO DO AGENDAMENTO */
+
+.booking-summary {
+  display: grid;
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap: 15px;
+
+  margin-bottom: 25px;
+}
+
+
+.booking-summary > div {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 20px;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  background: white;
+
+}
+
+
+.booking-summary span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+
+.booking-summary strong {
+  color: var(--navy);
+  font-size: 1.15rem;
+}
+
+
+/* PRÓXIMA ETAPA */
+
+.booking-next {
+
+  margin-top: 25px;
+
+  padding: 28px;
+
+  border-radius: var(--radius);
+
+  background: var(--soft);
+
+  border: 1px solid var(--border);
+
+}
+
+
+.booking-next h2 {
+  margin-top: 0;
+}
+
+
+.booking-next p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+
+  .booking-summary {
+    grid-template-columns: 1fr;
+  }
+
+
+  .center-action {
+    align-items: stretch;
+  }
+
+
+  .center-action .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+
+  .page-back {
+    margin-bottom: 20px;
+  }
+
+}
