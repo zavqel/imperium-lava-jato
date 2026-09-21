@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#07136f"
+  >
+
+  <title>
+    Agendamento | IMPÉRIUM
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+  <div class="container nav-wrap">
+
+    <a
+      class="brand"
+      href="index.html"
+    >
+
+      <img
+        src="logo-imperium-horizontal.png"
+        alt="IMPÉRIUM"
+      >
+
+    </a>
+
+
+    <button
+      class="menu-toggle"
+      aria-label="Abrir menu"
+    >
+      ☰
+    </button>
+
+
+    <nav class="main-nav">
+
+      <a href="index.html">
+        Início
+      </a>
+
+      <a href="montar.html">
+        Montar lavagem
+      </a>
+
+      <a href="index.html#avaliacoes">
+        Avaliações
+      </a>
+
+      <a href="index.html#contato">
+        Contato
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<main>
+
+<section class="section">
+
+  <div class="container">
+
+    <div class="page-back">
+
+      <a href="montar.html">
+        ← Voltar para montagem
+      </a>
+
+    </div>
+
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        AGENDAMENTO
+      </span>
+
+      <h1>
+        Escolha um horário disponível.
+      </h1>
+
+      <p>
+        Primeiro confirme o serviço escolhido
+        e depois selecione a data e o horário.
+      </p>
+
+    </div>
+
+
+    <!-- RESUMO -->
+
+    <div class="booking-summary">
+
+      <div>
+
+        <span>
+          Serviço escolhido
+        </span>
+
+        <strong id="booking-service">
+          —
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Tempo estimado
+        </span>
+
+        <strong id="booking-duration">
+          —
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Total
+        </span>
+
+        <strong id="booking-price">
+          R$ 0,00
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- DATA E HORÁRIOS -->
+
+    <div class="booking-preview">
+
+      <div class="booking-card">
+
+        <h3>
+          Data
+        </h3>
+
+        <input
+          id="booking-date"
+          type="date"
+        >
+
+      </div>
+
+
+      <div class="booking-card">
+
+        <h3>
+          Horários disponíveis
+        </h3>
+
+        <div
+          id="time-slots"
+          class="time-slots"
+        >
+
+          <span class="empty-state">
+            Selecione uma data para consultar
+            os horários.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="booking-next">
+
+      <h2>
+        Próxima etapa
+      </h2>
+
+      <p>
+        Nesta primeira versão os horários são
+        demonstrativos. Depois vamos conectar
+        esta etapa à agenda real do IMPÉRIUM,
+        registrar o cliente, veículo e gerar
+        a confirmação do agendamento.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container footer-wrap">
+
+    <span>
+      © <span id="year"></span>
+      IMPÉRIUM Lava Jato e Estacionamento
+    </span>
+
+    <a href="index.html">
+      Voltar ao início
+    </a>
+
+  </div>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
