@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07136f" />
+  <meta name="description" content="IMPÉRIUM Lava Jato e Estacionamento — serviços automotivos, agendamento e atendimento personalizado." />
+  <title>IMPÉRIUM | Lava Jato e Estacionamento</title>
+  <link rel="icon" type="image/jpeg" href="logo-imperium.jpg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="IMPÉRIUM">
+        <img src="logo-imperium.jpg" alt="IMPÉRIUM Lava Jato e Estacionamento" />
+      </a>
+
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="#como-funciona">Como trabalhamos</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#monte">Monte sua lavagem</a>
+        <a href="#agendamento">Agendamento</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">LAVA JATO • ESTACIONAMENTO</span>
+          <h1>Seu carro cuidado com <span>atenção aos detalhes.</span></h1>
+          <p>
+            Um novo espaço digital para conhecer nossos serviços, montar sua lavagem,
+            consultar horários e agendar seu atendimento.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#monte">Montar minha lavagem</a>
+            <a class="btn btn-secondary" href="#agendamento">Agendar horário</a>
+          </div>
+          <div class="hero-contact">
+            <a href="https://wa.me/5516993575780" target="_blank" rel="noopener">WhatsApp: (16) 99357-5780</a>
+            <span>Rua General Carneiro, 695 — Estação — Franca/SP</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-glow"></div>
+          <img src="logo-imperium.jpg" alt="Logo oficial do IMPÉRIUM" />
+          <div class="hero-card-caption">
+            <strong>IMPÉRIUM</strong>
+            <span>Lava Jato e Estacionamento</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">NOSSA FORMA DE TRABALHO</span>
+          <h2>Um atendimento pensado para o seu carro.</h2>
+          <p>Esta área está pronta para receber a descrição oficial do processo do IMPÉRIUM.</p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="info-card">
+            <div class="step-number">01</div>
+            <h3>Escolha o serviço</h3>
+            <p>O cliente encontra o serviço principal e entende o que está incluído.</p>
+          </article>
+          <article class="info-card">
+            <div class="step-number">02</div>
+            <h3>Personalize</h3>
+            <p>Adicione os opcionais necessários e veja o valor ser atualizado automaticamente.</p>
+          </article>
+          <article class="info-card">
+            <div class="step-number">03</div>
+            <h3>Agende</h3>
+            <p>O sistema apresenta somente horários compatíveis com a duração do atendimento.</p>
+          </article>
+          <article class="info-card">
+            <div class="step-number">04</div>
+            <h3>Atenda e registre</h3>
+            <p>O serviço concluído pode ficar registrado no histórico do cliente e do veículo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos" class="section section-soft">
+      <div class="container">
+        <div class="section-heading row-heading">
+          <div>
+            <span class="eyebrow">SERVIÇOS</span>
+            <h2>Escolha o que seu carro precisa.</h2>
+          </div>
+          <span class="edit-note">Os serviços e preços serão cadastrados no sistema.</span>
+        </div>
+        <div id="services-grid" class="services-grid"></div>
+      </div>
+    </section>
+
+    <section id="monte" class="section configurator-section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">CONFIGURADOR</span>
+          <h2>Monte sua lavagem como um pedido.</h2>
+          <p>Selecione um serviço base e acrescente apenas o que deseja.</p>
+        </div>
+
+        <div class="configurator">
+          <div class="config-panel">
+            <h3>1. Serviço principal</h3>
+            <div id="base-services" class="option-list"></div>
+
+            <h3>2. Adicionais</h3>
+            <div id="addons" class="option-list"></div>
+          </div>
+
+          <aside class="order-summary">
+            <div class="summary-top">
+              <span>Seu pedido</span>
+              <span id="order-status" class="status-pill">Em montagem</span>
+            </div>
+            <div id="selected-items" class="selected-items"></div>
+            <div class="summary-line">
+              <span>Tempo estimado</span>
+              <strong id="total-time">0 min</strong>
+            </div>
+            <div class="summary-total">
+              <span>Total</span>
+              <strong id="total-price">R$ 0,00</strong>
+            </div>
+            <button class="btn btn-primary btn-full" type="button" onclick="goToScheduling()">
+              Continuar para agendamento
+            </button>
+            <small>Os valores exibidos aqui são configuráveis no arquivo <code>app.js</code>.</small>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="agendamento" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">AGENDAMENTO</span>
+          <h2>Escolha um horário disponível.</h2>
+          <p>A estrutura abaixo será ligada ao banco de dados e à agenda real do IMPÉRIUM.</p>
+        </div>
+
+        <div class="booking-preview">
+          <div class="booking-card">
+            <h3>Data</h3>
+            <input id="booking-date" type="date" />
+          </div>
+          <div class="booking-card">
+            <h3>Horários disponíveis</h3>
+            <div id="time-slots" class="time-slots">
+              <span class="empty-state">Selecione uma data para consultar os horários.</span>
+            </div>
+          </div>
+          <div class="booking-card booking-card-wide">
+            <h3>Próxima etapa</h3>
+            <p>
+              Depois desta primeira versão, vamos conectar esta tela ao banco de dados,
+              registrar clientes/veículos, bloquear conflitos e gerar a confirmação do agendamento.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="avaliacoes" class="section section-soft">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">AVALIAÇÕES</span>
+          <h2>O que nossos clientes dizem.</h2>
+          <p>Espaço preparado para integrar as avaliações públicas do Google.</p>
+        </div>
+
+        <div class="reviews-placeholder">
+          <div class="review-stat">
+            <strong>Google</strong>
+            <span>Integração futura</span>
+          </div>
+          <div id="reviews-grid" class="reviews-grid">
+            <article class="review-card">
+              <span class="stars">★★★★★</span>
+              <p>As avaliações reais do Google serão carregadas aqui.</p>
+              <small>Cliente do IMPÉRIUM</small>
+            </article>
+            <article class="review-card">
+              <span class="stars">★★★★★</span>
+              <p>Também poderemos destacar comentários recentes e a nota média.</p>
+              <small>Google Maps</small>
+            </article>
+            <article class="review-card">
+              <span class="stars">★★★★★</span>
+              <p>O conteúdo definitivo será conectado quando configurarmos a integração.</p>
+              <small>IMPÉRIUM</small>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section client-section">
+      <div class="container client-grid">
+        <div>
+          <span class="eyebrow">ÁREA DO CLIENTE</span>
+          <h2>Seu histórico sempre à mão.</h2>
+          <p>
+            A conta do cliente ficará preparada para guardar veículos cadastrados,
+            histórico de lavagens, serviços favoritos e novos agendamentos.
+          </p>
+        </div>
+        <div class="client-features">
+          <div><strong>Histórico</strong><span>Visualize serviços realizados.</span></div>
+          <div><strong>Favoritos</strong><span>Repita sua configuração rapidamente.</span></div>
+          <div><strong>Veículos</strong><span>Cadastre e selecione seus carros.</span></div>
+          <div><strong>Agendamentos</strong><span>Acompanhe próximos atendimentos.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section contact-section">
+      <div class="container contact-grid">
+        <div>
+          <span class="eyebrow">CONTATO</span>
+          <h2>Fale com o IMPÉRIUM.</h2>
+          <p>Atendimento e informações pelo WhatsApp.</p>
+        </div>
+        <div class="contact-list">
+          <a href="https://wa.me/5516993575780" target="_blank" rel="noopener">
+            <span>WhatsApp</span>
+            <strong>(16) 99357-5780</strong>
+          </a>
+          <a href="https://instagram.com/imperium_lavajato" target="_blank" rel="noopener">
+            <span>Instagram</span>
+            <strong>@imperium_lavajato</strong>
+          </a>
+          <div>
+            <span>Endereço</span>
+            <strong>Rua General Carneiro, 695 — Estação — Franca/SP</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <span>© <span id="year"></span> IMPÉRIUM Lava Jato e Estacionamento</span>
+      <span>Site em desenvolvimento</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
