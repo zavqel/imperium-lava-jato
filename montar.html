@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#07136f"
+  >
+
+  <title>
+    Monte sua lavagem | IMPÉRIUM
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+</head>
+
+
+<body>
+
+<header class="site-header">
+
+  <div class="container nav-wrap">
+
+    <a
+      class="brand"
+      href="index.html"
+    >
+
+      <img
+        src="logo-imperium-horizontal.png"
+        alt="IMPÉRIUM"
+      >
+
+    </a>
+
+
+    <button
+      class="menu-toggle"
+      aria-label="Abrir menu"
+    >
+      ☰
+    </button>
+
+
+    <nav class="main-nav">
+
+      <a href="index.html">
+        Início
+      </a>
+
+      <a href="index.html#quem-somos">
+        Quem somos
+      </a>
+
+      <a href="index.html#avaliacoes">
+        Avaliações
+      </a>
+
+      <a href="index.html#contato">
+        Contato
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<main>
+
+<section class="section configurator-section">
+
+  <div class="container">
+
+    <div class="page-back">
+
+      <a href="index.html">
+        ← Voltar para o início
+      </a>
+
+    </div>
+
+
+    <div class="section-heading">
+
+      <span class="eyebrow">
+        MONTE SUA LAVAGEM
+      </span>
+
+      <h1>
+        Escolha o que seu carro precisa.
+      </h1>
+
+      <p>
+        Selecione o serviço principal e
+        acrescente os opcionais desejados.
+      </p>
+
+    </div>
+
+
+    <div class="configurator">
+
+      <div class="config-panel">
+
+        <h3>
+          1. Serviço principal
+        </h3>
+
+        <div
+          id="base-services"
+          class="option-list"
+        ></div>
+
+
+        <h3>
+          2. Adicionais
+        </h3>
+
+        <div
+          id="addons"
+          class="option-list"
+        ></div>
+
+      </div>
+
+
+      <aside class="order-summary">
+
+        <div class="summary-top">
+
+          <span>
+            Seu pedido
+          </span>
+
+          <span
+            id="order-status"
+            class="status-pill"
+          >
+            Em montagem
+          </span>
+
+        </div>
+
+
+        <div
+          id="selected-items"
+          class="selected-items"
+        ></div>
+
+
+        <div class="summary-line">
+
+          <span>
+            Tempo estimado
+          </span>
+
+          <strong id="total-time">
+            0 min
+          </strong>
+
+        </div>
+
+
+        <div class="summary-total">
+
+          <span>
+            Total
+          </span>
+
+          <strong id="total-price">
+            R$ 0,00
+          </strong>
+
+        </div>
+
+
+        <button
+          class="btn btn-light btn-full"
+          type="button"
+          onclick="goToScheduling()"
+        >
+          Consultar horários disponíveis
+        </button>
+
+
+        <small>
+          Os valores apresentados são
+          referentes à configuração atual.
+        </small>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container footer-wrap">
+
+    <span>
+      © <span id="year"></span>
+      IMPÉRIUM Lava Jato e Estacionamento
+    </span>
+
+    <a href="index.html">
+      Voltar ao início
+    </a>
+
+  </div>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
