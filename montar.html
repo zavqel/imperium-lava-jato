@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b3a">
+  <meta name="description" content="Monte seu atendimento no IMPÉRIUM e consulte o valor do combo.">
+  <title>Montar atendimento | IMPÉRIUM</title>
+  <link rel="icon" type="image/jpeg" href="logo-imperium.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Voltar ao início"><img src="logo-imperium.jpg" alt="IMPÉRIUM"></a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="index.html#empresa">Quem somos</a>
+        <a href="index.html#processo">Como trabalhamos</a>
+        <a href="index.html#servicos">Serviços</a>
+        <a class="nav-cta" href="montar.html">Montar atendimento</a>
+        <a href="agendamento.html">Agendar</a>
+        <a href="index.html#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="container page-back"><a href="index.html">← Voltar para a apresentação</a></div>
+
+    <section class="section compact-top">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">MONTAR ATENDIMENTO</span>
+          <h1>Monte seu combo como um pedido.</h1>
+          <p>Escolha um serviço principal, acrescente outros serviços e veja o desconto progressivo ser calculado automaticamente. Valores e durações ainda pendentes aparecem como “a confirmar”.</p>
+        </div>
+
+        <div class="builder-layout">
+          <div class="builder-panel">
+            <section class="builder-block">
+              <div class="builder-heading"><span>01</span><div><h2>Veículo</h2><p>Os valores oficiais de lavagem informados agora valem para carros pequenos.</p></div></div>
+              <div class="vehicle-options">
+                <label class="choice-card selected"><input type="radio" name="vehicle" value="carro-pequeno" checked><span><strong>Carro pequeno</strong><small>Gol, Onix, HB20 e similares.</small></span><b>Preços base atuais</b></label>
+                <label class="choice-card"><input type="radio" name="vehicle" value="outra-categoria"><span><strong>Outro veículo</strong><small>Categoria com valor a confirmar.</small></span><b>Avaliação</b></label>
+              </div>
+            </section>
+
+            <section class="builder-block">
+              <div class="builder-heading"><span>02</span><div><h2>Serviço principal</h2><p>Escolha uma lavagem base para começar.</p></div></div>
+              <div id="base-services" class="option-list"></div>
+            </section>
+
+            <section class="builder-block">
+              <div class="builder-heading"><span>03</span><div><h2>Adicionais e serviços</h2><p>Você pode combinar vários serviços no mesmo atendimento.</p></div></div>
+              <div id="addons" class="option-list"></div>
+            </section>
+
+            <section class="builder-block warning-block" id="motor">
+              <div class="builder-heading"><span>04</span><div><h2>Lavagem de motor</h2><p>Leia as condições antes de selecionar este serviço.</p></div></div>
+              <div class="motor-warning-box">
+                <strong>⚠️ Termo de ciência obrigatório</strong>
+                <p>A lavagem de motor envolve riscos com água e produtos químicos. Mesmo com proteção de módulos, bornes, sensores e outros componentes, podem ocorrer falhas ou problemas relacionados a condições pré-existentes.</p>
+                <p>O motor aguarda aproximadamente <strong>3 horas para esfriar</strong> antes da lavagem.</p>
+                <label class="checkbox-line"><input id="motor-aware" type="checkbox"><span>Li e estou ciente dos riscos envolvidos na lavagem de motor.</span></label>
+              </div>
+            </section>
+          </div>
+
+          <aside class="order-summary sticky-summary">
+            <div class="summary-top"><span>Seu combo</span><span id="order-status" class="status-pill">Em montagem</span></div>
+            <div id="selected-items" class="selected-items"></div>
+            <div class="summary-row"><span>Subtotal</span><strong id="subtotal-price">R$ 0,00</strong></div>
+            <div class="summary-row discount-row"><span id="discount-label">Desconto</span><strong id="discount-value">R$ 0,00</strong></div>
+            <div class="summary-total"><span>Total</span><strong id="total-price">R$ 0,00</strong></div>
+            <div class="progress-discount"><div class="progress-copy"><span id="next-discount-message">Adicione serviços para ativar os descontos.</span><strong id="next-discount-value"></strong></div><div class="progress-track"><span id="discount-progress"></span></div></div>
+            <button class="btn btn-primary btn-full" type="button" onclick="goToScheduling()">Consultar horários disponíveis</button>
+            <p class="summary-note">Horários presenciais: 08:00–17:00. Para agendamentos antecipados a partir de 06:30, será necessária confirmação de pagamento na etapa completa do sistema.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-wrap"><span>© <span id="year"></span> IMPÉRIUM</span><span>Rua General Carneiro, 695 — Franca/SP</span></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>
