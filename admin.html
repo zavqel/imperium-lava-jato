@@ -559,6 +559,31 @@
   width: auto;
 }
 
+/* =========================
+   STATUS DE AGENDAMENTO
+========================= */
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.status-agendado { background: #2b2b2b; color: #ddd; }
+.status-confirmado { background: #173a28; color: #7ee2a5; }
+.status-andamento { background: #3b3217; color: #f0d878; }
+.status-concluido { background: #17312f; color: #76ddd4; }
+.status-cancelado { background: #4a1b1b; color: #ff9c9c; }
+
+.agendamento-acoes {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 600px) {
 
   .promocao-modal-form {
@@ -997,6 +1022,7 @@
                     <th>Duração</th>
                     <th>Status</th>
                     <th>Total</th>
+                    <th>Ações</th>
                   </tr>
                 </thead>
 
@@ -1480,6 +1506,115 @@
 
   </div>
 
+</div>
+
+<!-- MODAL DE AGENDAMENTO -->
+
+<div
+  id="agendamento-modal"
+  class="modal-overlay"
+  onclick="fecharModalAgendamento(event)"
+>
+  <div
+    class="modal"
+    onclick="event.stopPropagation()"
+  >
+    <div class="modal-header">
+      <h2>Editar agendamento</h2>
+
+      <button
+        type="button"
+        class="modal-close"
+        onclick="fecharModalAgendamento()"
+      >
+        ×
+      </button>
+    </div>
+
+    <form id="agendamento-form">
+
+      <input type="hidden" id="agendamento-id">
+
+      <div class="modal-form">
+
+        <label>
+          Cliente
+          <input
+            type="text"
+            id="agendamento-cliente"
+            readonly
+          >
+        </label>
+
+        <label>
+          Data
+          <input
+            type="date"
+            id="agendamento-data"
+            readonly
+          >
+        </label>
+
+        <label>
+          Horário
+          <input
+            type="text"
+            id="agendamento-horario"
+            readonly
+          >
+        </label>
+
+        <label>
+          Total
+          <input
+            type="text"
+            id="agendamento-total"
+            readonly
+          >
+        </label>
+
+        <label class="full">
+          Status
+          <select id="agendamento-status">
+            <option value="agendado">Agendado</option>
+            <option value="confirmado">Confirmado</option>
+            <option value="em_andamento">Em andamento</option>
+            <option value="concluido">Concluído</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </label>
+
+        <label class="full">
+          Observações
+          <textarea
+            id="agendamento-observacoes"
+            placeholder="Observações internas sobre este agendamento..."
+          ></textarea>
+        </label>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="btn btn-cancel"
+          onclick="fecharModalAgendamento()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-save"
+        >
+          Salvar alterações
+        </button>
+
+      </div>
+
+    </form>
+  </div>
 </div>
 
     </div>
@@ -2759,81 +2894,95 @@ async function excluirPromocao(id) {
   async function carregarAgendamentos() {
 
     const tbody =
-      document.getElementById(
-        "agendamentos-table"
-      );
+      document.getElementById("agendamentos-table");
 
     try {
 
       const data =
-        await apiFetch(
-          "/api/agendamentos"
-        );
-
+        await apiFetch("/api/agendamentos");
 
       const agendamentos =
         data.agendamentos || [];
-
 
       if (!agendamentos.length) {
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="6">
+            <td colspan="7">
               Nenhum agendamento encontrado.
             </td>
           </tr>
         `;
 
         return;
-
       }
 
-
       tbody.innerHTML =
-        agendamentos.map(item => `
+        agendamentos.map(item => {
 
-          <tr>
+          const statusTexto =
+            formatarStatusAgendamento(item.status);
 
-            <td>
-              ${escapeHtml(
-                item.cliente_nome || "-"
-              )}
-            </td>
+          const statusClasse =
+            classeStatusAgendamento(item.status);
 
-            <td>
-              ${item.data || "-"}
-            </td>
+          return `
+            <tr>
 
-            <td>
-              ${item.hora_inicio || "-"}
-            </td>
+              <td>
+                ${escapeHtml(item.cliente_nome || "-")}
+              </td>
 
-            <td>
-              ${item.duracao_minutos || 0} min
-            </td>
+              <td>
+                ${formatarData(item.data)}
+              </td>
 
-            <td>
-              ${escapeHtml(
-                item.status || "-"
-              )}
-            </td>
+              <td>
+                ${escapeHtml(item.hora_inicio || "-")}
+                ${
+                  item.hora_fim
+                    ? ` - ${escapeHtml(item.hora_fim)}`
+                    : ""
+                }
+              </td>
 
-            <td>
-              R$ ${Number(
-                item.total || 0
-              ).toFixed(2).replace(".", ",")}
-            </td>
+              <td>
+                ${item.duracao_minutos || 0} min
+              </td>
 
-          </tr>
+              <td>
+                <span class="status-badge ${statusClasse}">
+                  ${escapeHtml(statusTexto)}
+                </span>
+              </td>
 
-        `).join("");
+              <td>
+                R$ ${Number(
+                  item.total || 0
+                ).toFixed(2).replace(".", ",")}
+              </td>
+
+              <td>
+                <div class="agendamento-acoes">
+                  <button
+                    class="btn-edit"
+                    onclick="editarAgendamento(${item.id})"
+                  >
+                    Editar
+                  </button>
+                </div>
+              </td>
+
+            </tr>
+          `;
+
+        }).join("");
 
     } catch (error) {
 
       tbody.innerHTML = `
         <tr>
-          <td colspan="6">
+          <td colspan="7">
             Erro ao carregar agendamentos.
           </td>
         </tr>
@@ -2846,7 +2995,213 @@ async function excluirPromocao(id) {
   }
 
 
-  /*
+  function formatarData(data) {
+
+    if (!data) return "-";
+
+    const partes = String(data).split("-");
+
+    if (partes.length === 3) {
+      return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    return escapeHtml(data);
+  }
+
+
+  function formatarStatusAgendamento(status) {
+
+    const mapa = {
+      agendado: "Agendado",
+      confirmado: "Confirmado",
+      em_andamento: "Em andamento",
+      andamento: "Em andamento",
+      concluido: "Concluído",
+      concluído: "Concluído",
+      cancelado: "Cancelado"
+    };
+
+    return mapa[String(status || "").toLowerCase()]
+      || status
+      || "Agendado";
+  }
+
+
+  function classeStatusAgendamento(status) {
+
+    const valor = String(status || "").toLowerCase();
+
+    if (valor === "confirmado") return "status-confirmado";
+
+    if (
+      valor === "em_andamento" ||
+      valor === "andamento"
+    ) {
+      return "status-andamento";
+    }
+
+    if (
+      valor === "concluido" ||
+      valor === "concluído"
+    ) {
+      return "status-concluido";
+    }
+
+    if (valor === "cancelado") return "status-cancelado";
+
+    return "status-agendado";
+  }
+
+
+  async function editarAgendamento(id) {
+
+    try {
+
+      const data =
+        await apiFetch("/api/agendamentos");
+
+      const agendamentos =
+        data.agendamentos || [];
+
+      const agendamento =
+        agendamentos.find(item =>
+          Number(item.id) === Number(id)
+        );
+
+      if (!agendamento) {
+        alert("Agendamento não encontrado.");
+        return;
+      }
+
+      document.getElementById("agendamento-id").value =
+        agendamento.id;
+
+      document.getElementById("agendamento-cliente").value =
+        agendamento.cliente_nome || "-";
+
+      document.getElementById("agendamento-data").value =
+        agendamento.data || "";
+
+      document.getElementById("agendamento-horario").value =
+        `${agendamento.hora_inicio || "-"}${
+          agendamento.hora_fim
+            ? ` - ${agendamento.hora_fim}`
+            : ""
+        }`;
+
+      document.getElementById("agendamento-total").value =
+        `R$ ${Number(
+          agendamento.total || 0
+        ).toFixed(2).replace(".", ",")}`;
+
+      const status =
+        String(
+          agendamento.status || "agendado"
+        ).toLowerCase();
+
+      const permitidos = [
+        "agendado",
+        "confirmado",
+        "em_andamento",
+        "concluido",
+        "cancelado"
+      ];
+
+      document.getElementById("agendamento-status").value =
+        permitidos.includes(status)
+          ? status
+          : "agendado";
+
+      document.getElementById("agendamento-observacoes").value =
+        agendamento.observacoes || "";
+
+      document
+        .getElementById("agendamento-modal")
+        .classList.add("open");
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        error.message ||
+        "Não foi possível carregar o agendamento."
+      );
+    }
+  }
+
+
+  function fecharModalAgendamento(event) {
+
+    if (
+      event &&
+      event.target &&
+      event.target.id !== "agendamento-modal"
+    ) {
+      return;
+    }
+
+    document
+      .getElementById("agendamento-modal")
+      .classList.remove("open");
+  }
+
+
+  document
+    .getElementById("agendamento-form")
+    .addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const id =
+        document.getElementById("agendamento-id").value;
+
+      if (!id) {
+        alert("Agendamento inválido.");
+        return;
+      }
+
+      const dados = {
+        status:
+          document.getElementById("agendamento-status").value,
+
+        observacoes:
+          document
+            .getElementById("agendamento-observacoes")
+            .value
+            .trim()
+      };
+
+      try {
+
+        await apiFetch(
+          `/api/agendamentos/${id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(dados)
+          }
+        );
+
+        alert("Agendamento atualizado com sucesso!");
+
+        fecharModalAgendamento();
+
+        await carregarAgendamentos();
+        await carregarDashboard();
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          error.message ||
+          "Não foi possível atualizar o agendamento."
+        );
+      }
+    });
+
+
+    /*
    * ==========================================
    * CLIENTES
    * ==========================================
