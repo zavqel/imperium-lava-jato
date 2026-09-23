@@ -1293,63 +1293,40 @@
    * ==========================================
    */
 
-  async function carregarDashboard() {
+async function carregarDashboard() {
 
-    try {
+  try {
 
-      const data =
-        await apiFetch("/api/dashboard");
+    const data = await apiFetch("/api/dashboard");
 
+    const dashboard = data.dashboard || data;
 
-      if (data.servicos !== undefined) {
+    document
+      .getElementById("total-servicos")
+      .textContent = dashboard.servicos ?? 0;
 
-        document
-          .getElementById("total-servicos")
-          .textContent =
-            data.servicos;
+    document
+      .getElementById("total-promocoes")
+      .textContent = dashboard.promocoes ?? 0;
 
-      }
+    document
+      .getElementById("total-clientes")
+      .textContent = dashboard.clientes ?? 0;
 
+    document
+      .getElementById("total-agendamentos")
+      .textContent = dashboard.agendamentos ?? 0;
 
-      if (data.promocoes !== undefined) {
+  } catch (error) {
 
-        document
-          .getElementById("total-promocoes")
-          .textContent =
-            data.promocoes;
-
-      }
-
-
-      if (data.clientes !== undefined) {
-
-        document
-          .getElementById("total-clientes")
-          .textContent =
-            data.clientes;
-
-      }
-
-
-      if (data.agendamentos !== undefined) {
-
-        document
-          .getElementById("total-agendamentos")
-          .textContent =
-            data.agendamentos;
-
-      }
-
-    } catch (error) {
-
-      console.error(
-        "Dashboard:",
-        error
-      );
-
-    }
+    console.error(
+      "Dashboard:",
+      error
+    );
 
   }
+
+}
 
 
   /*
