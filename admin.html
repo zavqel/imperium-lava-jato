@@ -505,6 +505,72 @@
   margin-top: 25px;
 }
 
+    /* =========================
+   MODAL DE PROMOÇÃO
+========================= */
+
+.promocao-modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+
+.promocao-modal-form .full {
+  grid-column: 1 / -1;
+}
+
+.promocao-modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.promocao-modal-form input,
+.promocao-modal-form textarea {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  outline: none;
+}
+
+.promocao-modal-form input:focus,
+.promocao-modal-form textarea:focus {
+  border-color: #aaa;
+}
+
+.promocao-modal-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.promocao-checkbox {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px !important;
+}
+
+.promocao-checkbox input {
+  width: auto;
+}
+
+@media (max-width: 600px) {
+
+  .promocao-modal-form {
+    grid-template-columns: 1fr;
+  }
+
+  .promocao-modal-form .full {
+    grid-column: auto;
+  }
+
+}
+
 @media (max-width: 600px) {
   .modal-form {
     grid-template-columns: 1fr;
@@ -1234,6 +1300,178 @@
           class="btn btn-save"
         >
           Salvar serviço
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- MODAL DE PROMOÇÃO -->
+
+<div
+  id="promocao-modal"
+  class="modal-overlay"
+  onclick="fecharModalPromocao(event)"
+>
+
+  <div
+    class="modal"
+    onclick="event.stopPropagation()"
+  >
+
+    <div class="modal-header">
+
+      <h2 id="promocao-modal-titulo">
+        Nova promoção
+      </h2>
+
+      <button
+        type="button"
+        class="modal-close"
+        onclick="fecharModalPromocao()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <form
+      id="promocao-form"
+      class="promocao-modal-form"
+    >
+
+      <input
+        type="hidden"
+        id="promocao-id"
+      >
+
+
+      <label class="full">
+
+        Título da promoção
+
+        <input
+          type="text"
+          id="promocao-titulo"
+          placeholder="Ex.: Lavagem Completa + Coating"
+          required
+        >
+
+      </label>
+
+
+      <label class="full">
+
+        Descrição
+
+        <textarea
+          id="promocao-descricao"
+          placeholder="Descreva o que está incluso na promoção..."
+        ></textarea>
+
+      </label>
+
+
+      <label>
+
+        Preço promocional
+
+        <input
+          type="number"
+          id="promocao-preco"
+          min="0"
+          step="0.01"
+          placeholder="0,00"
+          required
+        >
+
+      </label>
+
+
+      <label>
+
+        Preço anterior
+
+        <input
+          type="number"
+          id="promocao-preco-anterior"
+          min="0"
+          step="0.01"
+          placeholder="0,00"
+        >
+
+      </label>
+
+
+      <label>
+
+        Data de início
+
+        <input
+          type="date"
+          id="promocao-data-inicio"
+        >
+
+      </label>
+
+
+      <label>
+
+        Data de término
+
+        <input
+          type="date"
+          id="promocao-data-fim"
+        >
+
+      </label>
+
+
+      <label class="full">
+
+        Imagem
+
+        <input
+          type="text"
+          id="promocao-imagem"
+          placeholder="URL da imagem (opcional)"
+        >
+
+      </label>
+
+
+      <label class="promocao-checkbox full">
+
+        <input
+          type="checkbox"
+          id="promocao-ativo"
+          checked
+        >
+
+        Promoção ativa
+
+      </label>
+
+
+      <div class="modal-actions full">
+
+        <button
+          type="button"
+          class="btn btn-cancel"
+          onclick="fecharModalPromocao()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-save"
+        >
+          Salvar promoção
         </button>
 
       </div>
@@ -2135,57 +2373,382 @@ async function excluirServico(id) {
   }
 
 
-  function novaPromocao() {
+function novaPromocao() {
+
+  document
+    .getElementById("promocao-modal-titulo")
+    .textContent = "Nova promoção";
+
+
+  document
+    .getElementById("promocao-id")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-titulo")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-descricao")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-preco")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-preco-anterior")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-data-inicio")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-data-fim")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-imagem")
+    .value = "";
+
+
+  document
+    .getElementById("promocao-ativo")
+    .checked = true;
+
+
+  document
+    .getElementById("promocao-modal")
+    .classList.add("open");
+
+
+  setTimeout(() => {
+
+    document
+      .getElementById("promocao-titulo")
+      .focus();
+
+  }, 100);
+
+}
+
+
+function fecharModalPromocao(event) {
+
+  if (
+    event &&
+    event.target &&
+    event.target.id !== "promocao-modal"
+  ) {
+    return;
+  }
+
+
+  document
+    .getElementById("promocao-modal")
+    .classList.remove("open");
+
+}
+
+
+async function editarPromocao(id) {
+
+  try {
+
+    const data =
+      await apiFetch("/api/promocoes");
+
+
+    const promocoes =
+      data.promocoes || [];
+
+
+    const promocao =
+      promocoes.find(item =>
+        Number(item.id) === Number(id)
+      );
+
+
+    if (!promocao) {
+
+      alert("Promoção não encontrada.");
+
+      return;
+
+    }
+
+
+    document
+      .getElementById("promocao-modal-titulo")
+      .textContent = "Editar promoção";
+
+
+    document
+      .getElementById("promocao-id")
+      .value = promocao.id;
+
+
+    document
+      .getElementById("promocao-titulo")
+      .value = promocao.titulo || "";
+
+
+    document
+      .getElementById("promocao-descricao")
+      .value = promocao.descricao || "";
+
+
+    document
+      .getElementById("promocao-preco")
+      .value = promocao.preco ?? "";
+
+
+    document
+      .getElementById("promocao-preco-anterior")
+      .value = promocao.preco_anterior ?? "";
+
+
+    document
+      .getElementById("promocao-data-inicio")
+      .value = promocao.data_inicio || "";
+
+
+    document
+      .getElementById("promocao-data-fim")
+      .value = promocao.data_fim || "";
+
+
+    document
+      .getElementById("promocao-imagem")
+      .value = promocao.imagem || "";
+
+
+    document
+      .getElementById("promocao-ativo")
+      .checked = Boolean(promocao.ativo);
+
+
+    document
+      .getElementById("promocao-modal")
+      .classList.add("open");
+
+  } catch (error) {
+
+    console.error(error);
 
     alert(
-      "A tela de cadastro de promoção será conectada na próxima etapa."
+      error.message ||
+      "Não foi possível carregar a promoção."
     );
 
   }
 
-
-  function editarPromocao(id) {
-
-    alert(
-      "Editar promoção ID: " + id
-    );
-
-  }
+}
 
 
-  async function excluirPromocao(id) {
+document
+  .getElementById("promocao-form")
+  .addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+
+    const id =
+      document
+        .getElementById("promocao-id")
+        .value;
+
+
+    const dados = {
+
+      titulo:
+        document
+          .getElementById("promocao-titulo")
+          .value
+          .trim(),
+
+
+      descricao:
+        document
+          .getElementById("promocao-descricao")
+          .value
+          .trim(),
+
+
+      preco:
+        Number(
+          document
+            .getElementById("promocao-preco")
+            .value
+        ),
+
+
+      preco_anterior:
+        Number(
+          document
+            .getElementById("promocao-preco-anterior")
+            .value || 0
+        ),
+
+
+      imagem:
+        document
+          .getElementById("promocao-imagem")
+          .value
+          .trim(),
+
+
+      data_inicio:
+        document
+          .getElementById("promocao-data-inicio")
+          .value || null,
+
+
+      data_fim:
+        document
+          .getElementById("promocao-data-fim")
+          .value || null,
+
+
+      ativo:
+        document
+          .getElementById("promocao-ativo")
+          .checked
+          ? 1
+          : 0
+
+    };
+
+
+    if (!dados.titulo) {
+
+      alert("Informe o título da promoção.");
+
+      return;
+
+    }
+
 
     if (
-      !confirm(
-        "Deseja realmente excluir esta promoção?"
-      )
+      Number.isNaN(dados.preco) ||
+      dados.preco < 0
     ) {
+
+      alert("Informe um preço válido.");
+
       return;
+
     }
 
 
     try {
 
-      await apiFetch(
-        `/api/promocoes/${id}`,
-        {
-          method: "DELETE"
-        }
-      );
+      if (id) {
+
+        await apiFetch(
+          `/api/promocoes/${id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(dados)
+          }
+        );
 
 
-      carregarPromocoes();
+        alert(
+          "Promoção atualizada com sucesso!"
+        );
 
-      carregarDashboard();
+      } else {
+
+        await apiFetch(
+          "/api/promocoes",
+          {
+            method: "POST",
+            body: JSON.stringify(dados)
+          }
+        );
+
+
+        alert(
+          "Promoção cadastrada com sucesso!"
+        );
+
+      }
+
+
+      fecharModalPromocao();
+
+
+      await carregarPromocoes();
+
+
+      await carregarDashboard();
 
     } catch (error) {
 
-      alert(error.message);
+      console.error(error);
+
+      alert(
+        error.message ||
+        "Não foi possível salvar a promoção."
+      );
 
     }
 
+  });
+
+
+async function excluirPromocao(id) {
+
+  if (
+    !confirm(
+      "Deseja realmente excluir esta promoção?"
+    )
+  ) {
+    return;
   }
 
+
+  try {
+
+    await apiFetch(
+      `/api/promocoes/${id}`,
+      {
+        method: "DELETE"
+      }
+    );
+
+
+    await carregarPromocoes();
+
+
+    await carregarDashboard();
+
+
+    alert(
+      "Promoção excluída com sucesso!"
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Não foi possível excluir a promoção."
+    );
+
+  }
+
+}
 
   /*
    * ==========================================
