@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071b3a">
+  <meta name="description" content="Consulte horários para o seu atendimento no IMPÉRIUM.">
+  <title>Agendamento | IMPÉRIUM</title>
+  <link rel="icon" type="image/jpeg" href="logo-imperium.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="IMPÉRIUM Lava Jato e Estacionamento">
+      <img src="logo-imperium.jpg" alt="Logo IMPÉRIUM Lava Jato e Estacionamento">
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="servicos.html">Serviços e valores</a>
+      <a href="montar.html" class="nav-cta">Montar atendimento</a>
+      <a href="promocoes.html">Promoções</a>
+      <a href="index.html#avaliacoes">Avaliações</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="page-main">
+    <div class="container page-back"><a href="montar.html">← Voltar para o combo</a></div>
+    <section class="section compact-top">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">AGENDAMENTO</span>
+          <h1>Consulte um horário para o seu atendimento.</h1>
+          <p>Esta é a base da agenda. O cálculo de horários será ativado depois que fecharmos oficialmente a duração de cada serviço e conectarmos o banco de dados para bloquear conflitos reais.</p>
+        </div>
+
+        <div class="booking-layout">
+          <aside class="booking-summary">
+            <span class="eyebrow">RESUMO</span>
+            <h2>Seu atendimento</h2>
+            <div id="booking-order" class="selected-items"></div>
+            <div class="summary-row"><span>Subtotal</span><strong id="booking-subtotal">R$ 0,00</strong></div>
+            <div class="summary-row discount-row"><span>Desconto</span><strong id="booking-discount">R$ 0,00</strong></div>
+            <div class="summary-total"><span>Total</span><strong id="booking-total">R$ 0,00</strong></div>
+            <a class="btn btn-secondary btn-full" href="montar.html">Alterar atendimento</a>
+          </aside>
+
+          <div class="booking-panel">
+            <div class="booking-card">
+              <label for="booking-date">Data desejada</label>
+              <input id="booking-date" type="date">
+              <small>Chegue 10 minutos antes do horário marcado. Há tolerância de até 10 minutos após o horário.</small>
+            </div>
+
+            <div class="booking-card">
+              <div class="booking-card-head"><h2>Horários disponíveis</h2><span id="duration-label" class="status-pill">Tempo estimado: 0 min</span></div>
+              <div id="time-slots" class="time-slots"><span class="empty-state">Escolha uma data para consultar os horários.</span></div>
+            </div>
+
+            <div class="booking-card early-card">
+              <div><strong>Horário antecipado</strong><p>Agendamentos a partir de 06:30 poderão ser liberados mediante confirmação de pagamento. O sistema completo liberará esse período somente após a confirmação.</p></div>
+              <span class="early-pill">06:30+</span>
+            </div>
+
+            <div class="booking-card">
+              <h2>Seu contato</h2>
+              <div class="form-grid">
+                <label>Nome<input id="customer-name" type="text" placeholder="Seu nome"></label>
+                <label>WhatsApp<input id="customer-phone" type="tel" placeholder="(16) 99999-9999"></label>
+              </div>
+              <label class="checkbox-line advance-call"><input id="advance-call" type="checkbox"><span>Desejo receber uma ligação caso meu atendimento possa ser antecipado.</span></label>
+            </div>
+
+            <div class="booking-card notice-card">
+              <strong>Importante sobre a agenda</strong>
+              <p>O sistema definitivo calculará a duração de cada serviço, verificará conflitos e só apresentará horários que terminem dentro do horário de operação. O último horário possível dependerá do tempo estimado do atendimento.</p>
+            </div>
+
+            <button id="confirm-booking" class="btn btn-primary btn-full" type="button" disabled>Confirmar agendamento</button>
+            <p id="booking-feedback" class="feedback" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-wrap"><span>© <span id="year"></span> IMPÉRIUM</span><span>Horário presencial: 08:00–17:00</span></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>
