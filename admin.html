@@ -2940,7 +2940,7 @@ async function excluirPromocao(id) {
             <tr>
 
               <td>
-                ${escapeHtml(item.cliente_nome || "-")}
+               ${escapeHtml(item.cliente_nome || item.cliente || "-")}
               </td>
 
               <td>
