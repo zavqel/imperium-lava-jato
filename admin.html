@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administração | IMPÉRIUM Lava Jato</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at top, #242424 0%, #111 45%, #080808 100%);
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .login-logo h1 {
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    .login-logo p {
+      color: #aaa;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      background: #111;
+      color: white;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #fff;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      color: #111;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: #ddd;
+    }
+
+    .login-error {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #3a1717;
+      color: #ff8c8c;
+      font-size: 14px;
+    }
+
+    /* =========================
+       ADMIN
+    ========================= */
+
+    #admin-screen {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #171717;
+      border-right: 1px solid #303030;
+      padding: 25px 15px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      padding: 5px 12px 25px;
+      border-bottom: 1px solid #303030;
+      margin-bottom: 20px;
+    }
+
+    .brand h2 {
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 5px;
+      color: #888;
+      font-size: 12px;
+    }
+
+    .menu button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #ccc;
+      padding: 13px 14px;
+      margin-bottom: 5px;
+      border-radius: 9px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: #292929;
+      color: white;
+    }
+
+    .logout {
+      position: absolute;
+      left: 15px;
+      right: 15px;
+      bottom: 20px;
+    }
+
+    .logout button {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #444;
+      background: transparent;
+      color: #ccc;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .logout button:hover {
+      background: #292929;
+      color: white;
+    }
+
+    .content {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      padding: 35px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+    }
+
+    .status {
+      padding: 8px 12px;
+      border-radius: 20px;
+      background: #16351f;
+      color: #72e29a;
+      font-size: 13px;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: #1b1b1b;
+      border: 1px solid #303030;
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .card-title {
+      color: #999;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .card-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .panel {
+      background: #1b1b1b;
+      border: 1px solid #303030;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px;
+      border-bottom: 1px solid #303030;
+    }
+
+    th {
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    td {
+      color: #ddd;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 12px;
+      background: #111;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: #aaa;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 11px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-save {
+      background: white;
+      color: #111;
+    }
+
+    .btn-cancel {
+      background: #333;
+      color: white;
+    }
+
+    .btn-edit {
+      background: #333;
+      color: white;
+      padding: 7px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-delete {
+      background: #4a1b1b;
+      color: #ff9c9c;
+      padding: 7px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 20;
+      padding: 10px 13px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background: #1b1b1b;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: .25s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .content {
+        margin-left: 0;
+        width: 100%;
+        padding: 25px 18px;
+        padding-top: 75px;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-form {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+      }
+
+      .login-box {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       LOGIN
+  ========================= -->
+
+  <section id="login-screen">
+
+    <div class="login-box">
+
+      <div class="login-logo">
+        <h1>IMPÉRIUM</h1>
+        <p>Painel Administrativo</p>
+      </div>
+
+      <form id="login-form">
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Seu e-mail"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Sua senha"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button class="btn-primary" type="submit">
+          Entrar
+        </button>
+
+        <div id="login-error" class="login-error"></div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ADMIN
+  ========================= -->
+
+  <section id="admin-screen">
+
+    <button class="mobile-menu" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+
+      <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+          <h2>IMPÉRIUM</h2>
+          <span>Administração</span>
+        </div>
+
+        <nav class="menu">
+
+          <button
+            class="active"
+            onclick="showSection('dashboard', this)"
+          >
+            🏠 Visão geral
+          </button>
+
+          <button
+            onclick="showSection('servicos', this)"
+          >
+            🚗 Serviços
+          </button>
+
+          <button
+            onclick="showSection('promocoes', this)"
+          >
+            🎁 Promoções
+          </button>
+
+          <button
+            onclick="showSection('agendamentos', this)"
+          >
+            📅 Agendamentos
+          </button>
+
+          <button
+            onclick="showSection('clientes', this)"
+          >
+            👤 Clientes
+          </button>
+
+          <button
+            onclick="showSection('configuracoes', this)"
+          >
+            ⚙️ Configurações
+          </button>
+
+        </nav>
+
+        <div class="logout">
+          <button onclick="logout()">
+            ↪ Sair
+          </button>
+        </div>
+
+      </aside>
+
+
+      <!-- CONTENT -->
+
+      <main class="content">
+
+        <div class="topbar">
+
+          <div>
+            <h1 id="page-title">Visão geral</h1>
+          </div>
+
+          <div class="status">
+            ● Sistema online
+          </div>
+
+        </div>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="section-dashboard">
+
+          <div class="cards">
+
+            <div class="card">
+              <div class="card-title">
+                Serviços cadastrados
+              </div>
+
+              <div
+                class="card-value"
+                id="total-servicos"
+              >
+                —
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                Promoções
+              </div>
+
+              <div
+                class="card-value"
+                id="total-promocoes"
+              >
+                —
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                Clientes
+              </div>
+
+              <div
+                class="card-value"
+                id="total-clientes"
+              >
+                —
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">
+                Agendamentos
+              </div>
+
+              <div
+                class="card-value"
+                id="total-agendamentos"
+              >
+                —
+              </div>
+            </div>
+
+          </div>
+
+          <div class="panel">
+
+            <h2>
+              Administração do site
+            </h2>
+
+            <p style="color:#aaa; line-height:1.7;">
+              Aqui você poderá controlar os serviços,
+              preços, promoções, horários, clientes e
+              agendamentos do IMPÉRIUM sem precisar
+              alterar o código do site.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- SERVIÇOS -->
+
+        <section
+          id="section-servicos"
+          style="display:none;"
+        >
+
+          <div class="panel">
+
+            <h2>Serviços</h2>
+
+            <button
+              class="btn btn-save"
+              onclick="novoServico()"
+            >
+              + Novo serviço
+            </button>
+
+            <div
+              class="table-wrapper"
+              style="margin-top:20px;"
+            >
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Duração</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+
+                <tbody id="servicos-table">
+                  <tr>
+                    <td colspan="6">
+                      Carregando...
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- PROMOÇÕES -->
+
+        <section
+          id="section-promocoes"
+          style="display:none;"
+        >
+
+          <div class="panel">
+
+            <h2>Promoções</h2>
+
+            <button
+              class="btn btn-save"
+              onclick="novaPromocao()"
+            >
+              + Nova promoção
+            </button>
+
+            <div
+              class="table-wrapper"
+              style="margin-top:20px;"
+            >
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Título</th>
+                    <th>Preço</th>
+                    <th>Período</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+
+                <tbody id="promocoes-table">
+                  <tr>
+                    <td colspan="5">
+                      Carregando...
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- AGENDAMENTOS -->
+
+        <section
+          id="section-agendamentos"
+          style="display:none;"
+        >
+
+          <div class="panel">
+
+            <h2>Agendamentos</h2>
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Data</th>
+                    <th>Horário</th>
+                    <th>Duração</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+
+                <tbody id="agendamentos-table">
+                  <tr>
+                    <td colspan="6">
+                      Carregando...
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- CLIENTES -->
+
+        <section
+          id="section-clientes"
+          style="display:none;"
+        >
+
+          <div class="panel">
+
+            <h2>Clientes</h2>
+
+            <div class="table-wrapper">
+
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Cadastro</th>
+                  </tr>
+                </thead>
+
+                <tbody id="clientes-table">
+                  <tr>
+                    <td colspan="4">
+                      Carregando...
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- CONFIGURAÇÕES -->
+
+        <section
+          id="section-configuracoes"
+          style="display:none;"
+        >
+
+          <div class="panel">
+
+            <h2>Configurações do site</h2>
+
+            <div class="grid-form">
+
+              <div class="field">
+                <label>
+                  Nome da empresa
+                </label>
+
+                <input
+                  id="config-nome"
+                  type="text"
+                >
+              </div>
+
+              <div class="field">
+                <label>
+                  WhatsApp
+                </label>
+
+                <input
+                  id="config-whatsapp"
+                  type="text"
+                >
+              </div>
+
+              <div class="field full">
+                <label>
+                  Endereço
+                </label>
+
+                <input
+                  id="config-endereco"
+                  type="text"
+                >
+              </div>
+
+              <div class="field full">
+                <label>
+                  Texto de apresentação
+                </label>
+
+                <textarea
+                  id="config-apresentacao"
+                ></textarea>
+              </div>
+
+            </div>
+
+            <div class="actions">
+
+              <button
+                class="btn btn-save"
+                onclick="salvarConfiguracoes()"
+              >
+                Salvar alterações
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+    </div>
+
+  </section>
+
+
+<script>
+
+  /*
+   * ==========================================
+   * CONFIGURAÇÃO
+   * ==========================================
+   */
+
+  const API_URL =
+    "https://imperium-api.imperiumlj.workers.dev";
+
+
+  /*
+   * ==========================================
+   * ESTADO DA SESSÃO
+   * ==========================================
+   */
+
+  let token =
+    localStorage.getItem("imperium_admin_token");
+
+
+  /*
+   * ==========================================
+   * INICIALIZAÇÃO
+   * ==========================================
+   */
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    if (token) {
+      abrirAdmin();
+    }
+
+  });
+
+
+  /*
+   * ==========================================
+   * LOGIN
+   * ==========================================
+   */
+
+  document
+    .getElementById("login-form")
+    .addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const error =
+        document.getElementById("login-error");
+
+      error.style.display = "none";
+
+      try {
+
+        const response =
+          await fetch(`${API_URL}/api/login`, {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              email,
+              password
+            })
+
+          });
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok || !data.sucesso) {
+
+          throw new Error(
+            data.erro ||
+            data.mensagem ||
+            "E-mail ou senha inválidos."
+          );
+
+        }
+
+
+        /*
+         * Aceita os nomes mais comuns
+         * para o token.
+         */
+
+        token =
+          data.token ||
+          data.access_token ||
+          data.accessToken;
+
+
+        if (!token) {
+
+          throw new Error(
+            "A API não retornou o token de acesso."
+          );
+
+        }
+
+
+        localStorage.setItem(
+          "imperium_admin_token",
+          token
+        );
+
+
+        abrirAdmin();
+
+      } catch (error) {
+
+        console.error(error);
+
+        document
+          .getElementById("login-error")
+          .textContent =
+            error.message ||
+            "Não foi possível realizar o login.";
+
+        document
+          .getElementById("login-error")
+          .style.display = "block";
+
+      }
+
+    });
+
+
+  /*
+   * ==========================================
+   * ABRIR ADMIN
+   * ==========================================
+   */
+
+  function abrirAdmin() {
+
+    document
+      .getElementById("login-screen")
+      .style.display = "none";
+
+    document
+      .getElementById("admin-screen")
+      .style.display = "block";
+
+    carregarDashboard();
+
+  }
+
+
+  /*
+   * ==========================================
+   * LOGOUT
+   * ==========================================
+   */
+
+  function logout() {
+
+    localStorage.removeItem(
+      "imperium_admin_token"
+    );
+
+    token = null;
+
+    location.reload();
+
+  }
+
+
+  /*
+   * ==========================================
+   * REQUISIÇÃO AUTENTICADA
+   * ==========================================
+   */
+
+  async function apiFetch(endpoint, options = {}) {
+
+    const headers = {
+
+      "Content-Type":
+        "application/json",
+
+      ...(options.headers || {}),
+
+      "Authorization":
+        `Bearer ${token}`
+
+    };
+
+
+    const response =
+      await fetch(
+        `${API_URL}${endpoint}`,
+        {
+          ...options,
+          headers
+        }
+      );
+
+
+    if (response.status === 401) {
+
+      logout();
+
+      throw new Error(
+        "Sessão expirada."
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.erro ||
+        data.mensagem ||
+        "Erro na API."
+      );
+
+    }
+
+
+    return data;
+
+  }
+
+
+  /*
+   * ==========================================
+   * MENU
+   * ==========================================
+   */
+
+  function showSection(section, button) {
+
+    const sections = [
+      "dashboard",
+      "servicos",
+      "promocoes",
+      "agendamentos",
+      "clientes",
+      "configuracoes"
+    ];
+
+
+    sections.forEach(name => {
+
+      const element =
+        document.getElementById(
+          `section-${name}`
+        );
+
+      if (element) {
+        element.style.display =
+          name === section
+            ? "block"
+            : "none";
+      }
+
+    });
+
+
+    document
+      .querySelectorAll(".menu button")
+      .forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+
+    if (button) {
+      button.classList.add("active");
+    }
+
+
+    const titles = {
+
+      dashboard: "Visão geral",
+
+      servicos: "Serviços",
+
+      promocoes: "Promoções",
+
+      agendamentos: "Agendamentos",
+
+      clientes: "Clientes",
+
+      configuracoes: "Configurações"
+
+    };
+
+
+    document
+      .getElementById("page-title")
+      .textContent =
+        titles[section] ||
+        "Administração";
+
+
+    document
+      .getElementById("sidebar")
+      .classList.remove("open");
+
+
+    if (section === "servicos") {
+      carregarServicos();
+    }
+
+    if (section === "promocoes") {
+      carregarPromocoes();
+    }
+
+    if (section === "agendamentos") {
+      carregarAgendamentos();
+    }
+
+    if (section === "clientes") {
+      carregarClientes();
+    }
+
+    if (section === "configuracoes") {
+      carregarConfiguracoes();
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * DASHBOARD
+   * ==========================================
+   */
+
+  async function carregarDashboard() {
+
+    try {
+
+      const data =
+        await apiFetch("/api/dashboard");
+
+
+      if (data.servicos !== undefined) {
+
+        document
+          .getElementById("total-servicos")
+          .textContent =
+            data.servicos;
+
+      }
+
+
+      if (data.promocoes !== undefined) {
+
+        document
+          .getElementById("total-promocoes")
+          .textContent =
+            data.promocoes;
+
+      }
+
+
+      if (data.clientes !== undefined) {
+
+        document
+          .getElementById("total-clientes")
+          .textContent =
+            data.clientes;
+
+      }
+
+
+      if (data.agendamentos !== undefined) {
+
+        document
+          .getElementById("total-agendamentos")
+          .textContent =
+            data.agendamentos;
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Dashboard:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * SERVIÇOS
+   * ==========================================
+   */
+
+  async function carregarServicos() {
+
+    const tbody =
+      document.getElementById(
+        "servicos-table"
+      );
+
+    try {
+
+      const data =
+        await apiFetch("/api/servicos");
+
+
+      const servicos =
+        data.servicos || [];
+
+
+      if (!servicos.length) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6">
+              Nenhum serviço cadastrado.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        servicos.map(servico => `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(servico.nome || "")}
+            </td>
+
+            <td>
+              ${escapeHtml(servico.categoria || "-")}
+            </td>
+
+            <td>
+              R$ ${Number(
+                servico.preco || 0
+              ).toFixed(2).replace(".", ",")}
+            </td>
+
+            <td>
+              ${servico.duracao_minutos || 0} min
+            </td>
+
+            <td>
+              ${servico.ativo
+                ? "Ativo"
+                : "Inativo"}
+            </td>
+
+            <td>
+
+              <button
+                class="btn-edit"
+                onclick="editarServico(${servico.id})"
+              >
+                Editar
+              </button>
+
+              <button
+                class="btn-delete"
+                onclick="excluirServico(${servico.id})"
+              >
+                Excluir
+              </button>
+
+            </td>
+
+          </tr>
+
+        `).join("");
+
+    } catch (error) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            Erro ao carregar serviços.
+          </td>
+        </tr>
+      `;
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  function novoServico() {
+
+    alert(
+      "A tela de cadastro de serviço será conectada na próxima etapa."
+    );
+
+  }
+
+
+  function editarServico(id) {
+
+    alert(
+      "Editar serviço ID: " + id
+    );
+
+  }
+
+
+  async function excluirServico(id) {
+
+    if (
+      !confirm(
+        "Deseja realmente excluir este serviço?"
+      )
+    ) {
+      return;
+    }
+
+
+    try {
+
+      await apiFetch(
+        `/api/servicos/${id}`,
+        {
+          method: "DELETE"
+        }
+      );
+
+
+      carregarServicos();
+
+      carregarDashboard();
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * PROMOÇÕES
+   * ==========================================
+   */
+
+  async function carregarPromocoes() {
+
+    const tbody =
+      document.getElementById(
+        "promocoes-table"
+      );
+
+    try {
+
+      const data =
+        await apiFetch("/api/promocoes");
+
+
+      const promocoes =
+        data.promocoes || [];
+
+
+      if (!promocoes.length) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5">
+              Nenhuma promoção cadastrada.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        promocoes.map(promocao => `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                promocao.titulo || ""
+              )}
+            </td>
+
+            <td>
+              R$ ${Number(
+                promocao.preco || 0
+              ).toFixed(2).replace(".", ",")}
+            </td>
+
+            <td>
+              ${promocao.data_inicio || "-"}
+              →
+              ${promocao.data_fim || "-"}
+            </td>
+
+            <td>
+              ${promocao.ativo
+                ? "Ativa"
+                : "Inativa"}
+            </td>
+
+            <td>
+
+              <button
+                class="btn-edit"
+                onclick="editarPromocao(${promocao.id})"
+              >
+                Editar
+              </button>
+
+              <button
+                class="btn-delete"
+                onclick="excluirPromocao(${promocao.id})"
+              >
+                Excluir
+              </button>
+
+            </td>
+
+          </tr>
+
+        `).join("");
+
+    } catch (error) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5">
+            Erro ao carregar promoções.
+          </td>
+        </tr>
+      `;
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  function novaPromocao() {
+
+    alert(
+      "A tela de cadastro de promoção será conectada na próxima etapa."
+    );
+
+  }
+
+
+  function editarPromocao(id) {
+
+    alert(
+      "Editar promoção ID: " + id
+    );
+
+  }
+
+
+  async function excluirPromocao(id) {
+
+    if (
+      !confirm(
+        "Deseja realmente excluir esta promoção?"
+      )
+    ) {
+      return;
+    }
+
+
+    try {
+
+      await apiFetch(
+        `/api/promocoes/${id}`,
+        {
+          method: "DELETE"
+        }
+      );
+
+
+      carregarPromocoes();
+
+      carregarDashboard();
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * AGENDAMENTOS
+   * ==========================================
+   */
+
+  async function carregarAgendamentos() {
+
+    const tbody =
+      document.getElementById(
+        "agendamentos-table"
+      );
+
+    try {
+
+      const data =
+        await apiFetch(
+          "/api/agendamentos"
+        );
+
+
+      const agendamentos =
+        data.agendamentos || [];
+
+
+      if (!agendamentos.length) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6">
+              Nenhum agendamento encontrado.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        agendamentos.map(item => `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                item.cliente_nome || "-"
+              )}
+            </td>
+
+            <td>
+              ${item.data || "-"}
+            </td>
+
+            <td>
+              ${item.hora_inicio || "-"}
+            </td>
+
+            <td>
+              ${item.duracao_minutos || 0} min
+            </td>
+
+            <td>
+              ${escapeHtml(
+                item.status || "-"
+              )}
+            </td>
+
+            <td>
+              R$ ${Number(
+                item.total || 0
+              ).toFixed(2).replace(".", ",")}
+            </td>
+
+          </tr>
+
+        `).join("");
+
+    } catch (error) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6">
+            Erro ao carregar agendamentos.
+          </td>
+        </tr>
+      `;
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * CLIENTES
+   * ==========================================
+   */
+
+  async function carregarClientes() {
+
+    const tbody =
+      document.getElementById(
+        "clientes-table"
+      );
+
+    try {
+
+      const data =
+        await apiFetch("/api/clientes");
+
+
+      const clientes =
+        data.clientes || [];
+
+
+      if (!clientes.length) {
+
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4">
+              Nenhum cliente cadastrado.
+            </td>
+          </tr>
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        clientes.map(cliente => `
+
+          <tr>
+
+            <td>
+              ${escapeHtml(
+                cliente.nome || ""
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                cliente.telefone || "-"
+              )}
+            </td>
+
+            <td>
+              ${escapeHtml(
+                cliente.email || "-"
+              )}
+            </td>
+
+            <td>
+              ${cliente.criado_em || "-"}
+            </td>
+
+          </tr>
+
+        `).join("");
+
+    } catch (error) {
+
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="4">
+            Erro ao carregar clientes.
+          </td>
+        </tr>
+      `;
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * CONFIGURAÇÕES
+   * ==========================================
+   */
+
+  async function carregarConfiguracoes() {
+
+    try {
+
+      const data =
+        await apiFetch(
+          "/api/configuracoes"
+        );
+
+
+      const config =
+        data.configuracoes || {};
+
+
+      document
+        .getElementById("config-nome")
+        .value =
+          config.nome_empresa || "";
+
+
+      document
+        .getElementById("config-whatsapp")
+        .value =
+          config.whatsapp || "";
+
+
+      document
+        .getElementById("config-endereco")
+        .value =
+          config.endereco || "";
+
+
+      document
+        .getElementById("config-apresentacao")
+        .value =
+          config.apresentacao || "";
+
+    } catch (error) {
+
+      console.error(
+        "Configurações:",
+        error
+      );
+
+    }
+
+  }
+
+
+  async function salvarConfiguracoes() {
+
+    const dados = {
+
+      nome_empresa:
+        document.getElementById(
+          "config-nome"
+        ).value,
+
+      whatsapp:
+        document.getElementById(
+          "config-whatsapp"
+        ).value,
+
+      endereco:
+        document.getElementById(
+          "config-endereco"
+        ).value,
+
+      apresentacao:
+        document.getElementById(
+          "config-apresentacao"
+        ).value
+
+    };
+
+
+    try {
+
+      await apiFetch(
+        "/api/configuracoes",
+        {
+          method: "PUT",
+          body: JSON.stringify(dados)
+        }
+      );
+
+
+      alert(
+        "Configurações salvas com sucesso!"
+      );
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  }
+
+
+  /*
+   * ==========================================
+   * MENU MOBILE
+   * ==========================================
+   */
+
+  function toggleMenu() {
+
+    document
+      .getElementById("sidebar")
+      .classList.toggle("open");
+
+  }
+
+
+  /*
+   * ==========================================
+   * SEGURANÇA
+   * ==========================================
+   */
+
+  function escapeHtml(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+</script>
+
+</body>
+</html>
