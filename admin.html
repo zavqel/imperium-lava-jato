@@ -932,7 +932,7 @@
 
                 <tbody id="servicos-table">
                   <tr>
-                    <td colspan="6">
+                    <td colspan="8">
                       Carregando...
                     </td>
                   </tr>
@@ -1019,6 +1019,7 @@
                     <th>Cliente</th>
                     <th>Data</th>
                     <th>Horário</th>
+                    <th>Serviços</th>
                     <th>Duração</th>
                     <th>Status</th>
                     <th>Total</th>
@@ -1542,6 +1543,15 @@
           <input
             type="text"
             id="agendamento-cliente"
+            readonly
+          >
+        </label>
+
+        <label class="full">
+          Serviços
+          <input
+            type="text"
+            id="agendamento-servicos"
             readonly
           >
         </label>
@@ -2908,7 +2918,7 @@ async function excluirPromocao(id) {
 
         tbody.innerHTML = `
           <tr>
-            <td colspan="7">
+            <td colspan="8">
               Nenhum agendamento encontrado.
             </td>
           </tr>
@@ -2947,6 +2957,10 @@ async function excluirPromocao(id) {
               </td>
 
               <td>
+                ${escapeHtml(item.servicos_nomes || "Não informado")}
+              </td>
+
+              <td>
                 ${item.duracao_minutos || 0} min
               </td>
 
@@ -2982,7 +2996,7 @@ async function excluirPromocao(id) {
 
       tbody.innerHTML = `
         <tr>
-          <td colspan="7">
+          <td colspan="8">
             Erro ao carregar agendamentos.
           </td>
         </tr>
@@ -3077,7 +3091,10 @@ async function excluirPromocao(id) {
         agendamento.id;
 
       document.getElementById("agendamento-cliente").value =
-        agendamento.cliente_nome || "-";
+        agendamento.cliente_nome || agendamento.cliente || "-";
+
+      document.getElementById("agendamento-servicos").value =
+        agendamento.servicos_nomes || "Não informado";
 
       document.getElementById("agendamento-data").value =
         agendamento.data || "";
