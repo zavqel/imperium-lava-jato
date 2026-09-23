@@ -389,6 +389,133 @@
     }
 
     /* =========================
+   MODAL
+========================= */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .75);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #1b1b1b;
+  border: 1px solid #383838;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.6);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.modal-header h2 {
+  font-size: 21px;
+}
+
+.modal-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: #444;
+}
+
+.modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+
+.modal-form .full {
+  grid-column: 1 / -1;
+}
+
+.modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.modal-form input,
+.modal-form textarea,
+.modal-form select {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  outline: none;
+}
+
+.modal-form input:focus,
+.modal-form textarea:focus,
+.modal-form select:focus {
+  border-color: #aaa;
+}
+
+.modal-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.modal-checkbox {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px !important;
+  margin-top: 5px;
+}
+
+.modal-checkbox input {
+  width: auto;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+  .modal-form {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-form .full {
+    grid-column: auto;
+  }
+}
+
+    /* =========================
        MOBILE
     ========================= */
 
@@ -940,6 +1067,183 @@
 
       </main>
 
+      <!-- MODAL DE SERVIÇO -->
+
+<div
+  id="servico-modal"
+  class="modal-overlay"
+  onclick="fecharModalServico(event)"
+>
+
+  <div
+    class="modal"
+    onclick="event.stopPropagation()"
+  >
+
+    <div class="modal-header">
+
+      <h2 id="servico-modal-titulo">
+        Novo serviço
+      </h2>
+
+      <button
+        type="button"
+        class="modal-close"
+        onclick="fecharModalServico()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <form
+      id="servico-form"
+      class="modal-form"
+    >
+
+      <input
+        type="hidden"
+        id="servico-id"
+      >
+
+
+      <label>
+        Nome do serviço
+
+        <input
+          type="text"
+          id="servico-nome"
+          placeholder="Ex.: Lavagem Básica"
+          required
+        >
+
+      </label>
+
+
+      <label>
+        Categoria
+
+        <input
+          type="text"
+          id="servico-categoria"
+          placeholder="Ex.: Lavagem"
+        >
+
+      </label>
+
+
+      <label class="full">
+        Descrição
+
+        <textarea
+          id="servico-descricao"
+          placeholder="Descreva o que está incluso no serviço..."
+        ></textarea>
+
+      </label>
+
+
+      <label>
+        Preço
+
+        <input
+          type="number"
+          id="servico-preco"
+          min="0"
+          step="0.01"
+          placeholder="0,00"
+          required
+        >
+
+      </label>
+
+
+      <label>
+        Tipo de preço
+
+        <select id="servico-preco-tipo">
+
+          <option value="fixo">
+            Preço fixo
+          </option>
+
+          <option value="a_partir_de">
+            A partir de
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+        Duração
+
+        <input
+          type="number"
+          id="servico-duracao"
+          min="1"
+          step="1"
+          placeholder="Ex.: 60"
+          required
+        >
+
+      </label>
+
+
+      <label>
+        Ordem de exibição
+
+        <input
+          type="number"
+          id="servico-ordem"
+          min="0"
+          step="1"
+          value="0"
+        >
+
+      </label>
+
+
+      <label class="modal-checkbox full">
+
+        <input
+          type="checkbox"
+          id="servico-ativo"
+          checked
+        >
+
+        Serviço ativo
+
+      </label>
+
+
+      <div class="modal-actions full">
+
+        <button
+          type="button"
+          class="btn btn-cancel"
+          onclick="fecharModalServico()"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-save"
+        >
+          Salvar serviço
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
     </div>
 
   </section>
@@ -1435,56 +1739,294 @@ async function carregarDashboard() {
   }
 
 
-  function novoServico() {
+function novoServico() {
 
-    alert(
-      "A tela de cadastro de serviço será conectada na próxima etapa."
-    );
+  document.getElementById("servico-modal-titulo")
+    .textContent = "Novo serviço";
 
+  document.getElementById("servico-id").value = "";
+
+  document.getElementById("servico-nome").value = "";
+
+  document.getElementById("servico-categoria").value = "";
+
+  document.getElementById("servico-descricao").value = "";
+
+  document.getElementById("servico-preco").value = "";
+
+  document.getElementById("servico-preco-tipo").value = "fixo";
+
+  document.getElementById("servico-duracao").value = "";
+
+  document.getElementById("servico-ordem").value = "0";
+
+  document.getElementById("servico-ativo").checked = true;
+
+  document
+    .getElementById("servico-modal")
+    .classList.add("open");
+
+  setTimeout(() => {
+    document.getElementById("servico-nome").focus();
+  }, 100);
+
+}
+
+
+function fecharModalServico(event) {
+
+  if (
+    event &&
+    event.target &&
+    event.target.id !== "servico-modal"
+  ) {
+    return;
   }
 
+  document
+    .getElementById("servico-modal")
+    .classList.remove("open");
 
-  function editarServico(id) {
-
-    alert(
-      "Editar serviço ID: " + id
-    );
-
-  }
+}
 
 
-  async function excluirServico(id) {
+async function editarServico(id) {
 
-    if (
-      !confirm(
-        "Deseja realmente excluir este serviço?"
-      )
-    ) {
+  try {
+
+    const data =
+      await apiFetch("/api/servicos");
+
+    const servicos =
+      data.servicos || [];
+
+    const servico =
+      servicos.find(item =>
+        Number(item.id) === Number(id)
+      );
+
+    if (!servico) {
+
+      alert("Serviço não encontrado.");
+
       return;
+
+    }
+
+    document.getElementById("servico-modal-titulo")
+      .textContent = "Editar serviço";
+
+    document.getElementById("servico-id").value =
+      servico.id;
+
+    document.getElementById("servico-nome").value =
+      servico.nome || "";
+
+    document.getElementById("servico-categoria").value =
+      servico.categoria || "";
+
+    document.getElementById("servico-descricao").value =
+      servico.descricao || "";
+
+    document.getElementById("servico-preco").value =
+      servico.preco ?? "";
+
+    document.getElementById("servico-preco-tipo").value =
+      servico.preco_tipo || "fixo";
+
+    document.getElementById("servico-duracao").value =
+      servico.duracao_minutos ?? "";
+
+    document.getElementById("servico-ordem").value =
+      servico.ordem ?? 0;
+
+    document.getElementById("servico-ativo").checked =
+      Boolean(servico.ativo);
+
+    document
+      .getElementById("servico-modal")
+      .classList.add("open");
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Não foi possível carregar o serviço."
+    );
+
+  }
+
+}
+
+
+document
+  .getElementById("servico-form")
+  .addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const id =
+      document.getElementById("servico-id").value;
+
+    const dados = {
+
+      nome:
+        document.getElementById("servico-nome").value.trim(),
+
+      categoria:
+        document.getElementById("servico-categoria").value.trim(),
+
+      descricao:
+        document.getElementById("servico-descricao").value.trim(),
+
+      preco:
+        Number(
+          document.getElementById("servico-preco").value
+        ),
+
+      preco_tipo:
+        document.getElementById("servico-preco-tipo").value,
+
+      duracao_minutos:
+        Number(
+          document.getElementById("servico-duracao").value
+        ),
+
+      ativo:
+        document.getElementById("servico-ativo").checked ? 1 : 0,
+
+      ordem:
+        Number(
+          document.getElementById("servico-ordem").value || 0
+        )
+
+    };
+
+
+    if (!dados.nome) {
+
+      alert("Informe o nome do serviço.");
+
+      return;
+
+    }
+
+
+    if (!dados.preco || dados.preco < 0) {
+
+      alert("Informe um preço válido.");
+
+      return;
+
+    }
+
+
+    if (!dados.duracao_minutos || dados.duracao_minutos < 1) {
+
+      alert("Informe uma duração válida.");
+
+      return;
+
     }
 
 
     try {
 
-      await apiFetch(
-        `/api/servicos/${id}`,
-        {
-          method: "DELETE"
-        }
-      );
+      if (id) {
+
+        await apiFetch(
+          `/api/servicos/${id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(dados)
+          }
+        );
+
+        alert(
+          "Serviço atualizado com sucesso!"
+        );
+
+      } else {
+
+        await apiFetch(
+          "/api/servicos",
+          {
+            method: "POST",
+            body: JSON.stringify(dados)
+          }
+        );
+
+        alert(
+          "Serviço cadastrado com sucesso!"
+        );
+
+      }
 
 
-      carregarServicos();
+      fecharModalServico();
 
-      carregarDashboard();
+      await carregarServicos();
+
+      await carregarDashboard();
 
     } catch (error) {
 
-      alert(error.message);
+      console.error(error);
+
+      alert(
+        error.message ||
+        "Não foi possível salvar o serviço."
+      );
 
     }
 
+  });
+
+
+async function excluirServico(id) {
+
+  if (
+    !confirm(
+      "Deseja realmente excluir este serviço?"
+    )
+  ) {
+    return;
   }
+
+
+  try {
+
+    await apiFetch(
+      `/api/servicos/${id}`,
+      {
+        method: "DELETE"
+      }
+    );
+
+
+    await carregarServicos();
+
+    await carregarDashboard();
+
+
+    alert(
+      "Serviço excluído com sucesso!"
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      error.message ||
+      "Não foi possível excluir o serviço."
+    );
+
+  }
+
+}
 
 
   /*
